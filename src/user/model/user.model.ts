@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsArray, IsEmail, IsEmpty, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from "class-validator";
+import { IsArray, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, ValidateNested } from "class-validator";
 import { Phone } from "./phone.model";
 import { UserGroups } from "./user-groups.enum";
 

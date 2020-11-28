@@ -16,6 +16,7 @@ message SignupReqDto{
     repeated string emails = 5;
     repeated Phone phones = 6;
     repeated UserGroups userGroups = 7;
+    // repeated string userGroups = 7;
     
 }
 
@@ -26,7 +27,8 @@ message Phone{
 }
 
 enum UserGroups {
-    ANONYMOUS_USER = 0;
-    ADMIN = 1;
-    SUPER_USER = 2;
+    USERGROUP_NONE = 0;
+    ANONYMOUS_USER = 1;
+    ADMIN = 2;
+    SUPER_USER = 3;
 }
