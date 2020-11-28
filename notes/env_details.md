@@ -14,8 +14,6 @@ DB Name = user_management
 
 DB User details = appdb/test1234
 
+### Testing tool used
 
-
-
-
-
+Wombat - it is under /home/manohar/projects/personal/my_microservices/user_management/03_tools/installed
