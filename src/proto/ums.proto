@@ -3,7 +3,30 @@ syntax = "proto3";
 package ums;
 
 service UmsService {
-    rpc SignUp(Empty) returns (Empty);
+    rpc SignUp(SignupReqDto) returns (Empty);
 }
 
 message Empty{}
+
+message SignupReqDto{
+    string code = 1;
+    string firstName = 2;
+    string middleName = 3;
+    string lastName = 4;
+    repeated string emails = 5;
+    repeated Phone phones = 6;
+    repeated UserGroups userGroups = 7;
+    
+}
+
+message Phone{
+    string type = 1;
+    string phoneNumber = 2;
+    string countryCode = 3;
+}
+
+enum UserGroups {
+    ANONYMOUS_USER = 0;
+    ADMIN = 1;
+    SUPER_USER = 2;
+}
