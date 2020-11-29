@@ -1,6 +1,6 @@
 import { Type } from "class-transformer";
 import { IsArray, IsDate, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength, ValidateNested } from "class-validator";
-import { IsUserExist } from "../validators/userid.validator";
+import { DoesUserExist } from "../validators/userid.validator";
 import { Phone } from "./phone.model";
 import { UserGroups } from "./user-groups.enum";
 
@@ -13,7 +13,7 @@ class User {
     @IsString()
     @MinLength(4, {message: 'ID should be more than 3 characters'})
     @MaxLength(100, {message: 'Choose shorter ID'})
-    @IsUserExist()
+    @DoesUserExist()
     userId: string;
     
     // @IsNotEmpty({message: 'First name is mandatory'})

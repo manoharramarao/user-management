@@ -6,12 +6,12 @@ import { UserDao } from "../user.dao";
 
 @ValidatorConstraint({ async: true })
 @Injectable()
-export class IsUserExistConstraint implements ValidatorConstraintInterface {
+export class DoesUserExistConstraint implements ValidatorConstraintInterface {
 
     constructor(
         protected readonly userDao: UserDao
     ){}
-    private logger = new Logger(IsUserExistConstraint.name);
+    private logger = new Logger(DoesUserExistConstraint.name);
 
     async validate(userId: any, args?: ValidationArguments): Promise<boolean> {
         return !await this.userDao.doesUserExist(userId);
@@ -21,14 +21,14 @@ export class IsUserExistConstraint implements ValidatorConstraintInterface {
     }
 }
 
-export function IsUserExist(validationOptions?: ValidationOptions){
+export function DoesUserExist(validationOptions?: ValidationOptions){
     return function(object: Object, propertyName: string){
         registerDecorator({
             target: object.constructor,
             propertyName: propertyName,
             options: validationOptions,
             constraints: [],
-            validator: IsUserExistConstraint,
+            validator: DoesUserExistConstraint,
         });
     };
 }

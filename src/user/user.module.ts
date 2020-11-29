@@ -3,7 +3,7 @@ import { DatabaseModule } from '../database/database.module';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { UserDao } from './user.dao';
-import { IsUserExistConstraint } from './validators/userid.validator';
+import { DoesUserExistConstraint } from './validators/userid.validator';
 
 @Module({
     imports: [
@@ -15,7 +15,7 @@ import { IsUserExistConstraint } from './validators/userid.validator';
     providers: [
         UserService,
         UserDao,
-        IsUserExistConstraint
+        DoesUserExistConstraint
     ],
 })
 export class UserModule {}
