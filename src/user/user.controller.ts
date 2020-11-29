@@ -3,10 +3,10 @@ import { GrpcMethod } from '@nestjs/microservices';
 import { User } from './model/user.model';
 import { UserService } from './user.service';
 // import { SignUpValidationPipe } from './pipes/signup-req-validation.pipe';
-import { AllRpcExceptionsFilter } from '../utility/filters/rpc-exception.filter';
+import { GlobalRpcExceptionsFilter } from '../utility/filters/rpc-exception.filter';
 
 @Controller('user')
-@UseFilters(AllRpcExceptionsFilter)
+@UseFilters(GlobalRpcExceptionsFilter)
 export class UserController {
 
     private logger = new Logger(UserController.name);
