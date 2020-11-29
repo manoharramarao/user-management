@@ -25,8 +25,23 @@ export class UserDao {
             })
             .catch(err => {
                 this.onCreateError(err);
+                throw err;
             });
         return user;
+    }
+
+    async doesUserExist(userId: string): Promise<boolean>{
+        return await this.db.collection('users').findOne({userId: userId})
+            .then(result => {
+                if(!result){
+                    return false;
+                }else{
+                    return true;
+                }
+            })
+            .catch(err => {
+                throw new err;
+            });
     }
 
     private async addMandatoryItems(user: User): Promise<void>{
@@ -60,6 +75,7 @@ export class UserDao {
     private onCreateError(error){
         if(error){
             this.logger.debug(`error occurred during insert ${error}`);
+            this.logger.error(error);
         }
     }
 

@@ -10,12 +10,13 @@ message Empty{}
 
 message SignupReqDto{
     string code = 1;
-    string firstName = 2;
-    string middleName = 3;
-    string lastName = 4;
-    repeated string emails = 5;
-    repeated Phone phones = 6;
-    repeated UserGroups userGroups = 7;
+    string userId = 2;
+    string firstName = 3;
+    string middleName = 4;
+    string lastName = 5;
+    repeated string emails = 6;
+    repeated Phone phones = 7;
+    repeated UserGroups userGroups = 8;
     // repeated string userGroups = 7;
     
 }

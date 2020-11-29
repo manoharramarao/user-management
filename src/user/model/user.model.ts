@@ -1,5 +1,6 @@
 import { Type } from "class-transformer";
-import { IsArray, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, ValidateNested } from "class-validator";
+import { IsArray, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength, ValidateNested } from "class-validator";
+import { IsUserExist } from "../validators/userid.validator";
 import { Phone } from "./phone.model";
 import { UserGroups } from "./user-groups.enum";
 
@@ -7,9 +8,16 @@ class User {
 
     @IsOptional()
     code: string;
+
+    @IsNotEmpty({message: `User ID can't be empty`})
+    @IsString()
+    @MinLength(4, {message: 'ID should be more than 3 characters'})
+    @MaxLength(100, {message: 'Choose shorter ID'})
+    @IsUserExist()
+    userId: string;
     
     // @IsNotEmpty({message: 'First name is mandatory'})
-    @IsNotEmpty()
+    @IsNotEmpty({message:`Firstname can't be empty`})
     @IsString()
     firstName: string;
 
@@ -20,7 +28,7 @@ class User {
     lastName: string;
 
     @IsArray()
-    @IsEmail({}, {each: true})
+    @IsEmail({}, {each: true, message: `Value should be an email`})
     emails: string[];
 
     @IsArray()

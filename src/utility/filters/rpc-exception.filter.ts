@@ -30,6 +30,7 @@ export class GlobalRpcExceptionsFilter extends BaseRpcExceptionFilter {
   catch(exception: any, host: ArgumentsHost): Observable<any> {
     this.logger.debug(`Inside ${GlobalRpcExceptionsFilter.name}`);
     this.logger.error(exception, exception.stack);
+    // this.logger.debug(host);
     // Below line will return only the message.
     // return throwError(new RpcException(exception.response.message[0]));
     
