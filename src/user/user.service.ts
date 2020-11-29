@@ -14,7 +14,7 @@ export class UserService {
         private userDao: UserDao
     ){}
 
-    async signUp(body: User): Promise<number> {
+    async signUp(body: User): Promise<User> {
         return await this.userDao.create(body);
     }
 }

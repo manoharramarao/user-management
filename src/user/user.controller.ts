@@ -14,10 +14,11 @@ export class UserController {
 
     @GrpcMethod('UmsService', 'SignUp')
     // @UsePipes(new ValidationPipe({ transform: true }))
-    async signUp(@Body(ValidationPipe) body: User): Promise<void>{
+    async signUp(@Body(ValidationPipe) body: User): Promise<User>{
         // this.logger.debug(body);
-        await this.userService.signUp(body);
-        return;
+        let user = new User();
+        user = await this.userService.signUp(body);
+        return user;
     }
 
 }

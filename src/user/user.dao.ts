@@ -16,17 +16,17 @@ export class UserDao {
         private db: Db
     ){}
 
-    async create(user: User): Promise<number>{
+    async create(user: User): Promise<User>{
         await this.addMandatoryItems(user);
         await this.addAuditItems(user);
         await this.db.collection('users').insertOne(user)
             .then(result => {
-                return this.onCreateSuccess(result);
+                user = this.onCreateSuccess(result);
             })
             .catch(err => {
                 this.onCreateError(err);
             });
-        return;
+        return user;
     }
 
     private async addMandatoryItems(user: User): Promise<void>{
@@ -51,7 +51,9 @@ export class UserDao {
     private onCreateSuccess(result){
         if(result){
             this.logger.debug(`User inserted successfully ${result}`);
-            return result.insertedCount;
+            let user = new User();
+            user = result.ops[0];
+            return user;
         }
     }
 

@@ -3,7 +3,7 @@ syntax = "proto3";
 package ums;
 
 service UmsService {
-    rpc SignUp(SignupReqDto) returns (Empty);
+    rpc SignUp(SignupReqDto) returns (SignupReqDto);
 }
 
 message Empty{}
