@@ -4,9 +4,34 @@ package ums;
 
 service UmsService {
     rpc SignUp(SignupReqDto) returns (SignupReqDto);
+    rpc CreateAddressForUser(CreateAddressDto) returns (Empty);
 }
 
 message Empty{}
+
+message CreateAddressDto{
+    string code = 1;
+    string name = 2;
+    string aptNumber = 3;
+    string addressLine1 = 4;
+    string addressLine2 = 5;
+    string addressLine3 = 6;
+    State state = 7;
+    Country country = 8;
+    string Zipcode = 9;
+    string pincode = 10;
+    string userCode = 11;
+}
+
+message Country{
+    string code = 1;
+    string name = 2; 
+}
+
+message State{
+    string code = 1;
+    string name = 2;
+}
 
 message SignupReqDto{
     string code = 1;

@@ -3,6 +3,7 @@ import { IsArray, IsDate, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, Max
 import { DoesUserExist } from "../validators/userid.validator";
 import { Phone } from "./phone.model";
 import { UserGroups } from "./user-groups.enum";
+import { Address } from './address.model';
 
 class User {
 
@@ -50,6 +51,10 @@ class User {
     @IsArray()
     @IsEnum(UserGroups, {each: true})
     userGroups: UserGroups[];
+
+    @IsOptional()
+    @IsArray()
+    addresses: Address[];
 
     @IsOptional()
     createdAt: Date;
