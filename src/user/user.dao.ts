@@ -6,6 +6,9 @@ import { v4 as uuidv4 } from 'uuid';
 import * as moment from 'moment';
 import { UserGroups } from './model/user-groups.enum';
 import { Address } from './model/address.model';
+import { UserCredentials } from './dto/sign-in-req.dto';
+import { SetPassReqDto } from './dto/set-pass-req.dto';
+import { Slat } from './model/salt.model';
 
 @Injectable()
 export class UserDao {
@@ -94,6 +97,33 @@ export class UserDao {
             .catch(err => {
                 throw new err;
             });
+    }
+
+    async isCredsValid(creds: UserCredentials): Promise<boolean>{
+        
+        return await this.db.collection('creds').findOne(
+            {
+                username: creds.username,
+                password: creds.password
+            })? true: false;
+    }
+
+    async setPassword(username: string, password: string, salt: string){
+        await this.db.collection('salts').updateOne(
+            {username: username},
+            {$set: {salt: salt}},
+            {upsert: true});
+        await this.db.collection('creds').updateOne(
+            {username: username}, 
+            {$set: {password: password}}, 
+            {upsert: true});
+    }
+
+    async getSalt(username: string): Promise<Slat>{
+        let salt = await this.db.collection('salts').findOne(
+            {username: username}
+        );
+        return salt;
     }
 
     private async addMandatoryItems(user: User): Promise<void>{

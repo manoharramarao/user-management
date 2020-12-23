@@ -1,2 +1,5 @@
 url:
   ums: '0.0.0.0:5005'
+
+jwt:
+  expiresIn: 43200

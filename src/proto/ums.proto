@@ -4,10 +4,31 @@ package ums;
 
 service UmsService {
     rpc SignUp(SignupReqDto) returns (SignupReqDto);
-    rpc CreateAddressForUser(CreateAddressDto) returns (Empty);
+    rpc SignIn(SignInReqDto) returns (SignInResDto);
+    rpc SetPassword(SetPassReqDto) returns (Empty);
+    rpc upsertAddressForUser(CreateAddressDto) returns (Empty);
 }
 
 message Empty{}
+
+message SetPassReqDto {
+    string username = 1;
+    string password = 2;
+    string confirmPassword = 3;
+}
+
+message SetPassResDto {
+    bool result = 1;
+}
+
+message SignInReqDto {
+    string username = 1;
+    string password = 2;
+}
+
+message SignInResDto {
+    string accessToken = 1;
+}
 
 message CreateAddressDto{
     string code = 1;
