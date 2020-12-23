@@ -5,6 +5,7 @@ import { IsEmpty, IsNotEmpty } from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
 import * as moment from 'moment';
 import { UserGroups } from './model/user-groups.enum';
+import { Address } from './model/address.model';
 
 @Injectable()
 export class UserDao {
@@ -28,6 +29,57 @@ export class UserDao {
                 throw err;
             });
         return user;
+    }
+
+    async upsertAddressForUser(address: Address): Promise<boolean>{
+        if(!address.code){
+            return this.addAddressForUser(address);
+        }else{
+            return this.updateAddressForUser(address);
+        }
+    }
+
+    private async addAddressForUser(address: Address): Promise<boolean>{
+        // this.logger.debug(`user code is ${address.userCode}`);
+        address.code = await uuidv4();
+        await this.db.collection('users').updateOne(
+            {"code": address.userCode},
+            { $push: {addresses: address}})
+            .then(result => {
+                this.logger.debug("Successfully created address");
+                this.logger.debug(`result is ${result}`);
+                return true;
+            })
+            .catch(err => {
+                this.onCreateError(err);
+                throw err;
+            });
+            return false;
+    }
+
+    private async updateAddressForUser(address: Address): Promise<boolean>{
+        // this.logger.debug(`user code is ${address.userCode}`);
+        // address.code = await uuidv4();
+        await this.db.collection('users').updateOne(
+            {
+                code: address.userCode,
+                addresses: {
+                    $elemMatch: {code: address.code}
+                }
+            },
+            { 
+                $set: {"addresses.$": address}
+            })
+            .then(result => {
+                this.logger.debug("Successfully created address");
+                this.logger.debug(`result is ${result}`);
+                return true;
+            })
+            .catch(err => {
+                this.onCreateError(err);
+                throw err;
+            });
+            return false;
     }
 
     async doesUserExist(userId: string): Promise<boolean>{

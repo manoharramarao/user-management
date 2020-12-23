@@ -3,6 +3,7 @@ import { Db } from 'mongodb';
 import { User } from './model/user.model';
 import { UserDao } from './user.dao';
 import { v4 as uuidv4 } from 'uuid';
+import { Address } from './model/address.model';
 
 @Injectable()
 export class UserService {
@@ -16,5 +17,9 @@ export class UserService {
 
     async signUp(body: User): Promise<User> {
         return await this.userDao.create(body);
+    }
+
+    async upsertAddressForUser(address: Address): Promise<boolean>{
+        return await this.userDao.upsertAddressForUser(address);
     }
 }
